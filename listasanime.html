@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animes Max</title>
+    <style>
+* {
+    box-sizing: border-box;
+}
+
+/* Estilos Gerais */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    background: linear-gradient(to left,  #0e37a1, #b454f4); /* Degradê de Roxo Escuro para Roxo Vibrante */
+    transition: margin-left 0.3s ease;
+}
+
+/* Menu Lateral */
+.menu {
+    background-color: #4B0082; /* Roxo Índigo */
+    color: #ffffff; /* Branco */
+    height: 100vh; /* Ocupa toda a altura da janela */
+    padding: 20px;
+    box-sizing: border-box;
+    width: 300px;
+    border: 15px solid #2E0853; /* Roxo Mais Escuro */
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.menu.hidden {
+    transform: translateX(-100%);
+}
+
+.menuinicial {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 45px;
+    color: #ffffff; /* Branco */
+    font-family: Tahoma, sans-serif;
+}
+
+.menuinicial2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 40px;
+    color: #ffffff; /* Branco */
+    font-family: Tahoma, sans-serif;
+}
+
+.menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.menu li {
+    margin: 20px 0;
+}
+
+.menu a {
+    color: #ffffff; /* Branco */
+    text-decoration: none;
+    display: block;
+    border-radius: 5px;
+    font-size: 30px;
+    text-align: center;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.menu a:hover {
+    background-color: #9370DB; /* Roxo Médio */
+}
+
+/* Conteúdo Principal */
+.conteudo {
+    flex: 1;
+    padding: 20px;
+    margin-left: 300px; /* Espaço para o menu */
+    transition: margin-left 0.3s ease;
+}
+
+.conteudo.expanded {
+    margin-left: 0;
+}
+
+/* Barra de Pesquisa */
+.barra-pesquisa {
+    width: 93%;
+    background-color: #4B0082; /* Roxo Índigo */
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 40px;
+    overflow: hidden;
+    border: 10px solid #000000; /* Preto */
+    margin-bottom: 20px;
+
+    margin: 40px;
+margin-left: 92px;
+
+}
+
+.barra-pesquisa input[type="text"] {
+    width: 60%;
+    padding: 10px;
+    border: 1px solid #000000; /* Preto */
+    border-radius: 5px;
+    margin-right: 10px;
+    height: 40px;
+    font-size: 18px;
+}
+
+/* Estilos dos Botões */
+.button  {
+    padding: 10px 20px;
+    border: 2px solid #000000; /* Preto */
+    border-radius: 5px;
+    font-size: 30px;
+    color: #ffffff; /* Branco */
+    cursor: pointer;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    margin-right: 10px;
+    height: 50px;
+    background-color: #800080; /* Roxo Médio */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #4B0082; /* Roxo Índigo */
+    color: #ffffff; /* Branco */
+}
+
+/* Gêneros */
+.generoteste a {
+    text-decoration: none;
+    color: #ffffff; /* Branco */
+    margin: 5px 10px;
+    padding: 10px;
+    border: 2px solid #9370DB; /* Roxo Médio */
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.generoteste a:hover {
+    background-color: #9370DB; /* Roxo Médio */
+    color: #ffffff; /* Branco */
+}
+
+.legenda2 {
+    background-color: #400f57; /* Roxo Escuro */
+    width: 2000px;
+    height: 670px;
+    color: #ffffff; /* Branco */
+    font-family: Tahoma, sans-serif;
+    padding: 20px;
+    margin: 5px;
+    font-size: 35px;
+    border-radius: 20px;
+    display: inline-block;
+    text-align: left; /* Alinhar texto à esquerda */
+    border: 5px solid #200758; /* Roxo Médio */
+    transition: transform .3s ease, box-shadow 0.3s ease; /* Adiciona transições */
+    position: relative; 
+}
+.legenda2 h3 {
+    color: #e7e7e7; /* Cor do título */
+    font-family: 'Arial', sans-serif; /* Fonte do título */
+}
+.legenda2 h1{ 
+    font-size: 70px;
+    color: #97cdff; /* Cor do título */
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; /* Fonte do título */}
+
+.legenda2 p {
+    color: #c0c0c0; /* Cor do parágrafo */
+    font-family: 'Georgia', serif; /* Fonte do parágrafo */
+}
+
+
+
+.legenda {
+
+    background-color: #410491; /* Roxo Escuro */
+    width: 400px;
+    height: 650px;
+    text-align: center;
+    color: #ffffff; /* Branco */
+    font-family: Tahoma, sans-serif;
+    padding: 20px;
+    margin: 5px;
+    font-size: 35px;
+    border-radius: 20px;
+    display: inline-block;
+    vertical-align: top;
+    border: 5px solid #200758; /* Roxo Médio */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Adiciona transições */
+
+   position: absolute; /* Fixar dentro do container */
+    right: 0;           /* Alinhar no canto direito */
+    top: 0;    
+
+}
+
+/* Legendas */
+.legenda {
+
+    background-color: #410491; /* Roxo Escuro */
+    width: 400px;
+    height: 650px;
+    text-align: center;
+    color: #ffffff; /* Branco */
+    font-family: Tahoma, sans-serif;
+    padding: 20px;
+    margin: 5px;
+    font-size: 35px;
+    border-radius: 20px;
+    display: inline-block;
+    vertical-align: top;
+    border: 5px solid #200758; /* Roxo Médio */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Adiciona transições */
+
+   position: absolute; /* Fixar dentro do container */
+    
+   
+    right: 0;           /* Alinhar no canto direito */
+        
+       
+    top: 0;    
+
+}
+
+.legenda:hover {
+    transform: scale(1.05); /* Aumenta ligeiramente o tamanho */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Adiciona sombra */
+}
+
+.legenda img.animes {
+    width: 100%;
+    height: auto;
+    border: 5px solid #200758; /* Roxo Médio */
+    border-radius: 15px;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease; /* Adiciona transição */
+    margin-top: 25px;
+
+}
+
+.legenda img.animes:hover {
+    transform: scale(1.1); /* Aumenta a imagem ao passar o mouse */
+}
+
+/* Logo */
+.logo {
+    display: block;
+    margin: 0 auto 20px;
+    height: 300px;
+}
+
+/* Paginação */
+.meio {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.lista {
+    background-color: #200758; /* Roxo Médio */
+    color: #ffffff; /* Branco */
+    border-radius: 15px;
+    height: 60px;
+    width: 60px;
+    margin: 0 5px;
+    cursor: pointer;
+    border: none;
+    font-size: 35px;
+    transition: background-color 0.3s ease;
+}
+
+.lista:hover {
+    background-color: #4B0082; /* Roxo Índigo */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .menu {
+        width: 100%;
+        height: auto;
+        transform: translateX(-100%);
+        position: absolute;
+        z-index: 1000;
+    }
+    .menu.hidden {
+        transform: translateX(-100%);
+    }
+    .conteudo {
+        margin-left: 0;
+    }
+    .barra-pesquisa {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .barra-pesquisa input[type="text"] {
+        width: 100%;
+        margin: 10px 0;
+    }
+    .button {
+        width: 100%;
+        margin: 5px 0;
+    }
+    .legenda {
+        width: 100%;
+        margin: 10px 0;
+    }
+}
+
+/* Slideshow */
+.slideshow-container {
+    position: relative;
+    max-width: 100%;
+    margin: auto;
+    overflow: hidden;
+}
+
+.mySlides {
+    display: none;
+    position: relative;
+    width: 100%;
+}
+
+.mySlides img {
+    width: 93%;
+    height: 700px;
+    border-radius: 50px;
+    object-fit: cover;
+    border: 5px solid #200758; /* Roxo Médio */
+}
+
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 19px;
+    margin-top: -22px;
+    color: #ffffff; /* Branco */
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 3px;
+    user-select: none;
+    background-color: rgba(175, 0, 175, 0.8); /* Roxo Médio Semi-Transparente */
+}
+
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(75, 0, 130, 0.8); /* Roxo Índigo Semi-Transparente */
+}
+
+.text {
+    color: #ffffff; /* Branco */
+    font-size: 35px;
+    padding: 12px 12px;
+    position: absolute;
+    bottom: 8px;
+    width: 93%;
+    text-align: center;
+    background-color: rgba(128, 0, 128, 0.7); /* Roxo Médio Semi-Transparente */
+
+margin: 40px;
+margin-left: 92px;
+
+
+}
+
+.dot-container {
+    text-align: center;
+    padding: 15px;
+    background: #180db6; /* Roxo Médio */
+    width: 93%;
+    border-radius: 50px;
+    border: 5px solid #200758; /* Roxo Médio */
+}
+
+.catalago{ 
+    text-align: center;
+    padding: 15px;
+    width: 100%;
+    border-radius: 50px;
+
+
+}
+.dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #ffffff; /* Branco */
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease, border-color 0.6s ease;
+}
+
+.active, .dot:hover {
+    background-color: #800080; /* Roxo Médio */
+    border-color: #800080; /* Roxo Médio */
+}
+
+        </style>
+   
+</head>
+
+<body>
+    <!-- Menu Lateral -->
+    <nav class="menu hidden" id="menuLateral">
+        <h2 class="menuinicial">Menu Inicial</h2>
+        <ul>
+            <li><a href="calendario.html">Calendário</a></li>
+            <li><a href="listasanime.html">Lista de Animes</a></li>
+            <li><a href="favoritos.html">Favoritos</a></li>
+            <li><a href="salvos.html">Salvos</a></li>
+        </ul>
+
+        <h2 class="menuinicial2">Genêros Principais</h2>
+        <div class="generoteste">
+            <a href="generos.html">Animação</a>
+            <a href="generos.html">Aventura</a>
+            <a href="generos.html">Batalha</a>
+            <a href="generos.html">Bishoujo</a>
+            <a href="generos.html">Bishounen</a>
+            <a href="generos.html">Comédia</a>
+            <a href="generos.html">Comédia Romântica</a>
+            <a href="generos.html">Cyberpunk</a>
+            <a href="generos.html">Conto de Fadas</a>
+            <a href="generos.html">Demência</a>
+            <a href="generos.html">Drama</a>
+            <a href="generos.html">Demoníaco</a>
+            <a href="generos.html">Dystopia</a>
+            <a href="generos.html">Ecchi</a>
+            <a href="generos.html">Esporte</a>
+            <a href="generos.html">Eroge</a>
+            <a href="generos.html">Equipe</a>
+            <a href="generos.html">Fantasia</a>
+            <a href="generos.html">Ficção Científica</a>
+            <a href="generos.html">Ficção Histórica</a>
+            <a href="generos.html">Furries</a>
+            <a href="generos.html">Gore</a>
+            <a href="generos.html">Gyaru</a>
+            <a href="generos.html">Gênero Escola</a>
+            <a href="generos.html">Harem</a>
+            <a href="generos.html">Hentai</a>
+            <a href="generos.html">Histórico</a>
+            <a href="generos.html">Horror</a>
+            <a href="generos.html">Iseka</a>
+            <a href="generos.html">Inteligência Artificial</a>
+            <a href="generos.html">Infantil</a>
+            <a href="generos.html">Josei</a>
+            <a href="generos.html">Jidaigeki</a>
+            <a href="generos.html">Kawaii</a>
+            <a href="generos.html">Kendo</a>
+            <a href="generos.html">Keiji (Detective)</a>
+            <a href="generos.html">Life</a>
+            <a href="generos.html">LitRPG</a>
+            <a href="generos.html">Loli</a>
+            <a href="generos.html">Magia</a>
+            <a href="generos.html">Mecha</a>
+            <a href="generos.html">Mistério</a>
+            <a href="generos.html">Musical</a>
+            <a href="generos.html">Moe</a>
+            <a href="generos.html">Ninja</a>
+            <a href="generos.html">Nostalgia</a>
+            <a href="generos.html">Neta</a>
+            <a href="generos.html">Omake</a>
+            <a href="generos.html">Otona (Adulto)</a>
+            <a href="generos.html">Omegaverse</a>
+            <a href="generos.html">Psicológico</a>
+            <a href="generos.html">Police (Policial)</a>
+            <a href="generos.html">Post-Apocalíptico</a>
+            <a href="generos.html">Quest</a>
+            <a href="generos.html">Slice of Life (Cotidiano)</a>
+            <a href="generos.html">Sobrenatural</a>
+            <a href="generos.html">Sci-Fi (Ficção Científica)</a>
+            <a href="generos.html">Sentai</a>
+            <a href="generos.html">Shoujo</a>
+            <a href="generos.html">Shounen</a>
+            <a href="generos.html">Thriller</a>
+            <a href="generos.html">Tragédia</a>
+            <a href="generos.html">Ushiro</a>
+            <a href="generos.html">Universo Alternativo</a>
+            <a href="generos.html">Underdog</a>
+            <a href="generos.html">Vampiro</a>
+            <a href="generos.html">Visual Novel</a>
+            <a href="generos.html">Violência</a>
+            <a href="generos.html">Wuxia</a>
+            <a href="generos.html">War</a>
+            <a href="generos.html">Webtoon</a>
+            <a href="generos.html">Xianxia</a>
+            <a href="generos.html">Yaoi</a>
+            <a href="generos.html">Yuri</a>
+            <a href="generos.html">Yu-Gi-Oh!</a>
+            <a href="generos.html">Youth</a>
+            <a href="generos.html">Zombis</a>
+            <a href="generos.html">Zany (Excêntrico)</a>
+            <a href="generos.html">Zeppan</a>
+        </div>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <main class="conteudo expanded" id="conteudoPrincipal">
+        <!-- Barra de Pesquisa -->
+        <div class="barra-pesquisa">
+
+            <button onclick="toggleMenu()" class="button">Menu</button>
+
+            <a href="series.html"> <button class="button">Séries</button></a>
+            <a href="filmes.html"> <button class="button">Filmes</button></a> 
+            <a href="index.html"> <button class="button">início</button></a> 
+
+            <input type="text" placeholder="Digite sua pesquisa...">
+            <button class="button">Pesquisar</button>
+        </div>  
+        <!-- Logo -->
+        <img src="Animes_Max-removebg-preview.png" alt="Logo" class="logo">
+
+    
+<nav class="catalago">
+
+    <div class="legenda2">
+
+        <h1>Kimetsu no Yaiba</h1>
+
+        <p>  Em Kimetsu no Yaiba, Tanjiro, um bondoso jovem que ganha a vida vendendo carvão, descobre <br>
+             que sua família foi massacrada por um demônio. E, para piorar, Nezuko, sua irmã mais nova e única <br>
+              sobrevivente, também acabou transformada em um demônio. Arrasado com essa sombria realidade, <br>
+              Tanjiro decide se tornar um matador de demônios para fazer sua irmã voltar a ser humana e para <br> destruir o demônio que matou seus entes queridos.</p>
+       
+              <h3>dublado / legendado</h3>
+
+              <a href="https://animesonlinecc.to/anime/kimetsu-no-yaiba/">  <div class="legenda"><img src="demonslayder.jpg" class="animes">demon slayer</div></a>
+       
+        </div>
+        
+
+
+        <div class="legenda2">
+
+            <h1>Boku no Hero</h1>
+    
+            <p>  Em um mundo onde quase toda a população possui algum poder sobre-humano, Izuku Midoriya <br>
+                 é um dos poucos casos de pessoas comuns. Mas esse não é o maior de seus problemas. Exatamente <br>
+                  por ser desprovido de qualquer poder, Izuku sofre constantemente nas mãos de seus colegas de <br>classe. 
+                   Nesse mundo fictício, desde o primeiro caso constatado de um recém-nascido com algum tipo <br>de poder, 
+                    o índice de criminalidade cresceu proporcional ao surgimento de heróis com as mais<br> variadas  capacidades. 
+                  <h3>dublado / legendado</h3>
+    
+                  <a href="https://animesonlinecc.to/anime/boku-no-hero-academia/"><div class="legenda"><img src="bok2.jpg" class="animes">oku no hero </div></a> 
+       
+            </div>
+            <div class="legenda2">
+
+                <h1>Jujutsu Kaisen</h1>
+        
+                <p> Jujutsu Kaisen é uma jornada épica que começa com Yuji Itadori, um estudante colegial comum que <br>
+                     tem sua vida transformada após um encontro fatídico com o sobrenatural. Quando Yuji acidentalmente <br>
+                      liberta uma terrível maldição contida em um artefato amaldiçoado, ele se vê imerso em um mundo <br>
+                       de trevas e perigo
+                      <h3>dublado / legendado</h3>
+        
+                      <a href="https://animesonlinecc.to/anime/jujutsu-kaisen-hd/"><div class="legenda"><img src="Jujutsu Kaisen.jpg" class="animes"> Jujutsu Kaisen</div></a> 
+       
+                </div>
+
+
+
+                <div class="legenda2">
+
+                    <h1>Haikyuu!</h1>
+            
+                    <p>  e dois garotos que se tornam rivais no ensino fundamental e se unem no time de vôlei do ensino <br>
+                         médio para se vingar de outras escolas.No ensino  médio, Shoyo e Tobio Kageyama, o "Rei da Corte", <br>
+                          se tornam colegas de equipe. Apesar de serem rivais, eles precisam se unir para entrar no clube de <br>
+                           vôlei do colégio Karasuno e continuar jogando vôlei. 
+                          <h3>dublado / legendado</h3>
+            
+ <a href="https://animesonlinecc.to/anime/haikyuu-hd/"><div class="legenda"> <img src="haaaaaaaaaaaa.jpg" class="animes">Haikyuu!</div></a> 
+       
+                    </div>
+                    <div class="legenda2">
+
+                        <h1>Spy × Familya</h1>
+                
+                        <p> conhecemos o agente secreto mais conhecido como Twilight. Para ele, nenhuma missão é complicada <br>
+                             demais se o objetivo for manter a paz. Por conta disso, Twilight trabalha arduamente para manter a <br>
+                              civilidade com o país vizinho, a fictícia nação Ostania. Sua mais nova tarefa é investigar a vida de <br>
+                               Donovan Desmond, um influente político de Ostania. No entanto, para conseguir concluí-la com suce- <br>
+                               sso, Twilight precisará se infiltrar na escola do filho de Donovan, a Academia Eden. Mas mais do que <br>
+                                isso, para manter um bom disfarce, Twilight deve se casar, ter uma filha e manter as aparências de <br>
+                                 uma família comum
+                              <h3>dublado / legendado</h3>
+                
+                              <a href="https://animesonlinecc.to/anime/spyxfamily/"><div class="legenda"> <img src="saaaaaa.webp" class="animes">Spy × Family</div></a> 
+       
+                        </div>
+                        <div class="legenda2">
+
+                            <h1>Vinland Saga</h1>
+                    
+                            <p> Quando Thors é convocado para mais uma batalha, o antigo guerreiro é encurralado em uma armadi- <br>
+                                lha para pagar por ter desertado tantos anos antes. Quando o plano é posto em ação, em meio a con- <br>
+                                 fusão, Thorfinn é feito refém e seu pai acaba morto. Thorfinn se vê obrigado a unir-se aos seus <br> sequestradores.
+                                  <h3>dublado / legendado</h3>
+                    
+                                  <a href="https://animesonlinecc.to/anime/vinland-saga "><div class="legenda"> <img src="Vinland Saga.jfif" class="animes"> Vinland Saga</div></a> 
+       
+                            </div>
+
+
+</nav>
+
+
+       
+<script>
+    function toggleMenu() {
+        const menu = document.getElementById('menuLateral');
+        const conteudo = document.getElementById('conteudoPrincipal');
+        menu.classList.toggle('hidden');
+        conteudo.classList.toggle('expanded');
+    }
+</script>
+</body>
+</html>

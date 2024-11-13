@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendário de Animes</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        /* Estilos Gerais */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            background: linear-gradient(to left,  #0e37a1, #b454f4); /* Degradê de Roxo Escuro para Roxo Vibrante */
+            transition: margin-left 0.3s ease;
+        }
+        
+        /* Menu Lateral */
+        .menu {
+            background-color: #4B0082; /* Roxo Índigo */
+            color: #ffffff; /* Branco */
+            height: 100vh; /* Ocupa toda a altura da janela */
+            padding: 20px;
+            box-sizing: border-box;
+            width: 300px;
+            border: 15px solid #2E0853; /* Roxo Mais Escuro */
+            position: fixed;
+            top: 0;
+            left: 0;
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .menu.hidden {
+            transform: translateX(-100%);
+        }
+        
+        .menuinicial {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 45px;
+            color: #ffffff; /* Branco */
+            font-family: Tahoma, sans-serif;
+        }
+        
+        .menuinicial2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 40px;
+            color: #ffffff; /* Branco */
+            font-family: Tahoma, sans-serif;
+        }
+        
+        .menu ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .menu li {
+            margin: 20px 0;
+        }
+        
+        .menu a {
+            color: #ffffff; /* Branco */
+            text-decoration: none;
+            display: block;
+            border-radius: 5px;
+            font-size: 30px;
+            text-align: center;
+            padding: 10px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .menu a:hover {
+            background-color: #9370DB; /* Roxo Médio */
+        }
+        
+        /* Conteúdo Principal */
+        .conteudo {
+            flex: 1;
+            padding: 20px;
+            margin-left: 300px; /* Espaço para o menu */
+            transition: margin-left 0.3s ease;
+        }
+        
+        .conteudo.expanded {
+            margin-left: 0;
+        }
+        
+        /* Barra de Pesquisa */
+        .barra-pesquisa {
+            width: 93%;
+            background-color: #4B0082; /* Roxo Índigo */
+            padding: 10px;
+            box-sizing: border-box;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 40px;
+            overflow: hidden;
+            border: 10px solid #000000; /* Preto */
+            margin: 40px;
+            margin-left: 92px;
+        }
+        
+        .barra-pesquisa input[type="text"] {
+            width: 60%;
+            padding: 10px;
+            border: 1px solid #000000; /* Preto */
+            border-radius: 5px;
+            margin-right: 10px;
+            height: 40px;
+            font-size: 18px;
+        }
+        
+        /* Estilos dos Botões */
+        .button  {
+            padding: 10px 20px;
+            border: 2px solid #000000; /* Preto */
+            border-radius: 5px;
+            font-size: 30px;
+            color: #ffffff; /* Branco */
+            cursor: pointer;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            margin-right: 10px;
+            height: 50px;
+            background-color: #800080; /* Roxo Médio */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .button:hover {
+            background-color: #4B0082; /* Roxo Índigo */
+            color: #ffffff; /* Branco */
+        }
+        
+        /* Gêneros */
+        .generoteste a {
+            text-decoration: none;
+            color: #ffffff; /* Branco */
+            margin: 5px 10px;
+            padding: 10px;
+            border: 2px solid #9370DB; /* Roxo Médio */
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .generoteste a:hover {
+            background-color: #9370DB; /* Roxo Médio */
+            color: #ffffff; /* Branco */
+        }
+        
+        /* Logo */
+        .logo {
+            display: block;
+            margin: 0 auto 20px;
+            height: 300px;
+        }
+        .calendar-container {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 900px; /* Aumenta a largura */
+    height: 600px; /* Aumenta a altura */
+    text-align: center;
+    margin: 0 auto; /* Centraliza o calendário */
+}
+
+.calendar-header {
+    background-color: #4c99af;
+    color: white;
+    padding: 20px 0; /* Aumenta o padding */
+    font-size: 30px; /* Aumenta o tamanho da fonte */
+}
+
+.calendar-header button {
+    background-color: #4c99af;
+    border: none;
+    color: white;
+    padding: 20px; /* Aumenta o tamanho do botão */
+    font-size: 25px; /* Aumenta o tamanho da fonte */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.calendar-header button:hover {
+    background-color: #45a049;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    padding: 20px;
+}
+
+.calendar-days div {
+    padding: 20px; /* Aumenta o padding dos dias */
+    font-size: 30px; /* Aumenta o tamanho da fonte */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.calendar-days div:hover {
+    background-color: #ddd;
+    border-radius: 5px;
+}
+
+.calendar-days .day-name {
+    font-weight: bold;
+    background-color: #f0f0f0;
+    font-size: 22px; /* Aumenta o tamanho da fonte dos nomes dos dias */
+}
+
+.calendar-days .today {
+    background-color: #ffeb3b;
+    border-radius: 5px;
+}
+
+
+    </style>
+</head>
+
+<body>
+    <!-- Menu Lateral -->
+    <nav class="menu hidden" id="menuLateral">
+        <h2 class="menuinicial">Menu Inicial</h2>
+        <ul>
+            <li><a href="calendario.html">Calendário</a></li>
+            <li><a href="listasanime.html">Lista de Animes</a></li>
+            <li><a href="favoritos.html">Favoritos</a></li>
+            <li><a href="salvos.html">Salvos</a></li>
+        </ul>
+
+ <h2 class="menuinicial2">Genêros Principais</h2>
+        <div class="generoteste">
+            <a href="generos.html">Animação</a>
+            <a href="generos.html">Aventura</a>
+            <a href="generos.html">Batalha</a>
+            <a href="generos.html">Bishoujo</a>
+            <a href="generos.html">Bishounen</a>
+            <a href="generos.html">Comédia</a>
+            <a href="generos.html">Comédia Romântica</a>
+            <a href="generos.html">Cyberpunk</a>
+            <a href="generos.html">Conto de Fadas</a>
+            <a href="generos.html">Demência</a>
+            <a href="generos.html">Drama</a>
+            <a href="generos.html">Demoníaco</a>
+            <a href="generos.html">Dystopia</a>
+            <a href="generos.html">Ecchi</a>
+            <a href="generos.html">Esporte</a>
+            <a href="generos.html">Eroge</a>
+            <a href="generos.html">Equipe</a>
+            <a href="generos.html">Fantasia</a>
+            <a href="generos.html">Ficção Científica</a>
+            <a href="generos.html">Ficção Histórica</a>
+            <a href="generos.html">Furries</a>
+            <a href="generos.html">Gore</a>
+            <a href="generos.html">Gyaru</a>
+            <a href="generos.html">Gênero Escola</a>
+            <a href="generos.html">Harem</a>
+            <a href="generos.html">Hentai</a>
+            <a href="generos.html">Histórico</a>
+            <a href="generos.html">Horror</a>
+            <a href="generos.html">Iseka</a>
+            <a href="generos.html">Inteligência Artificial</a>
+            <a href="generos.html">Infantil</a>
+            <a href="generos.html">Josei</a>
+            <a href="generos.html">Jidaigeki</a>
+            <a href="generos.html">Kawaii</a>
+            <a href="generos.html">Kendo</a>
+            <a href="generos.html">Keiji (Detective)</a>
+            <a href="generos.html">Life</a>
+            <a href="generos.html">LitRPG</a>
+            <a href="generos.html">Loli</a>
+            <a href="generos.html">Magia</a>
+            <a href="generos.html">Mecha</a>
+            <a href="generos.html">Mistério</a>
+            <a href="generos.html">Musical</a>
+            <a href="generos.html">Moe</a>
+            <a href="generos.html">Ninja</a>
+            <a href="generos.html">Nostalgia</a>
+            <a href="generos.html">Neta</a>
+            <a href="generos.html">Omake</a>
+            <a href="generos.html">Otona (Adulto)</a>
+            <a href="generos.html">Omegaverse</a>
+            <a href="generos.html">Psicológico</a>
+            <a href="generos.html">Police (Policial)</a>
+            <a href="generos.html">Post-Apocalíptico</a>
+            <a href="generos.html">Quest</a>
+            <a href="generos.html">Slice of Life (Cotidiano)</a>
+            <a href="generos.html">Sobrenatural</a>
+            <a href="generos.html">Sci-Fi (Ficção Científica)</a>
+            <a href="generos.html">Sentai</a>
+            <a href="generos.html">Shoujo</a>
+            <a href="generos.html">Shounen</a>
+            <a href="generos.html">Thriller</a>
+            <a href="generos.html">Tragédia</a>
+            <a href="generos.html">Ushiro</a>
+            <a href="generos.html">Universo Alternativo</a>
+            <a href="generos.html">Underdog</a>
+            <a href="generos.html">Vampiro</a>
+            <a href="generos.html">Visual Novel</a>
+            <a href="generos.html">Violência</a>
+            <a href="generos.html">Wuxia</a>
+            <a href="generos.html">War</a>
+            <a href="generos.html">Webtoon</a>
+            <a href="generos.html">Xianxia</a>
+            <a href="generos.html">Yaoi</a>
+            <a href="generos.html">Yuri</a>
+            <a href="generos.html">Yu-Gi-Oh!</a>
+            <a href="generos.html">Youth</a>
+            <a href="generos.html">Zombis</a>
+            <a href="generos.html">Zany (Excêntrico)</a>
+            <a href="generos.html">Zeppan</a>
+        </div>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <main class="conteudo expanded" id="conteudoPrincipal">
+        <!-- Barra de Pesquisa -->
+        <div class="barra-pesquisa">
+
+            <button onclick="toggleMenu()" class="button">Menu</button>
+
+            <a href="series.html"> <button class="button">Séries</button></a>
+            <a href="filmes.html"> <button class="button">Filmes</button></a> 
+            <a href="index.html"> <button class="button">início</button></a> 
+
+            <input type="text" placeholder="Digite sua pesquisa...">
+            <button class="button">Pesquisar</button>
+        </div>  
+
+       <center>
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <button id="prev-month">&lt;</button>
+                <span id="month-year"></span>
+                <button id="next-month">&gt;</button>
+            </div>
+            <div class="calendar-days" id="calendar-days">
+                <div class="day-name">Dom</div>
+                <div class="day-name">Seg</div>
+                <div class="day-name">Ter</div>
+                <div class="day-name">Qua</div>
+                <div class="day-name">Qui</div>
+                <div class="day-name">Sex</div>
+                <div class="day-name">Sáb</div>
+            </div>
+        </div></center>
+        
+        <script>
+            const monthNames = [
+                "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+                "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+            ];
+        
+            let currentDate = new Date();
+            let currentMonth = currentDate.getMonth();
+            let currentYear = currentDate.getFullYear();
+        
+            const monthYearElement = document.getElementById('month-year');
+            const calendarDaysElement = document.getElementById('calendar-days');
+            
+            function renderCalendar() {
+                const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
+                const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0);
+                const daysInMonth = lastDayOfMonth.getDate();
+                
+                // Atualiza o título do mês e ano
+                monthYearElement.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+                
+                // Limpa os dias do calendário
+                calendarDaysElement.innerHTML = `
+                    <div class="day-name">Dom</div>
+                    <div class="day-name">Seg</div>
+                    <div class="day-name">Ter</div>
+                    <div class="day-name">Qua</div>
+                    <div class="day-name">Qui</div>
+                    <div class="day-name">Sex</div>
+                    <div class="day-name">Sáb</div>
+                `;
+                
+                // Adiciona os dias do mês
+                for (let i = 1; i <= daysInMonth; i++) {
+                    const dayElement = document.createElement('div');
+                    dayElement.textContent = i;
+                    dayElement.classList.add('day');
+        
+                    // Marca o dia atual
+                    if (i === currentDate.getDate() && currentMonth === currentDate.getMonth() && currentYear === currentDate.getFullYear()) {
+                        dayElement.classList.add('today');
+                    }
+        
+                    // Adiciona o dia ao calendário
+                    calendarDaysElement.appendChild(dayElement);
+                }
+        
+                // Preenche os espaços vazios antes do primeiro dia do mês
+                const firstDayOfWeek = firstDayOfMonth.getDay();
+                for (let i = 0; i < firstDayOfWeek; i++) {
+                    const emptyDiv = document.createElement('div');
+                    calendarDaysElement.insertBefore(emptyDiv, calendarDaysElement.children[i + 7]);
+                }
+            }
+        
+            // Navegação entre meses
+            document.getElementById('prev-month').addEventListener('click', () => {
+                currentMonth--;
+                if (currentMonth < 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                }
+                renderCalendar();
+            });
+        
+            document.getElementById('next-month').addEventListener('click', () => {
+                currentMonth++;
+                if (currentMonth > 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                }
+                renderCalendar();
+            });
+        
+            // Inicializa o calendário
+            renderCalendar();
+        </script>
+
+
+
+</body>
+</html>
